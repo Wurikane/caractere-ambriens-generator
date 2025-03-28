@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import ProfileTab from './character-tabs/ProfileTab';
@@ -125,16 +124,25 @@ const CharacterForm: React.FC<CharacterFormProps> = ({
 
   const updateNestedFormData = (section: string, field: string, value: any) => {
     setFormData(prev => {
-      const updated = {
-        ...prev,
-        [section]: {
-          ...prev[section as keyof Character],
-          [field]: value
-        },
-        updatedAt: new Date().toISOString()
-      };
+      // Ensure that we're working with a valid section that exists on the Character type
+      if (section in prev) {
+        const sectionData = prev[section as keyof Character];
+        
+        // Verify that sectionData is an object before spreading
+        if (sectionData && typeof sectionData === 'object' && !Array.isArray(sectionData)) {
+          return {
+            ...prev,
+            [section]: {
+              ...sectionData,
+              [field]: value
+            },
+            updatedAt: new Date().toISOString()
+          };
+        }
+      }
       
-      return updated;
+      // Return unchanged state if section is not valid
+      return prev;
     });
   };
 
