@@ -15,7 +15,8 @@ enum AppView {
   DASHBOARD,
   CREATE_CHARACTER,
   EDIT_CHARACTER,
-  VIEW_CHARACTER
+  VIEW_CHARACTER,
+  GENERATE_PDF
 }
 
 const Index = () => {
@@ -75,6 +76,14 @@ const Index = () => {
       }
       setSelectedCharacter(character);
       setView(AppView.EDIT_CHARACTER);
+    }
+  };
+
+  const handleGeneratePDF = (id: string) => {
+    const character = characters.find(c => c.id === id);
+    if (character) {
+      setSelectedCharacter(character);
+      setView(AppView.GENERATE_PDF);
     }
   };
 
@@ -156,6 +165,7 @@ const Index = () => {
                     character={character}
                     onView={handleViewCharacter}
                     onEdit={handleEditCharacter}
+                    onGeneratePDF={handleGeneratePDF}
                   />
                 ))}
               </div>
@@ -196,6 +206,26 @@ const Index = () => {
                 readOnly={true}
                 onBack={() => setView(AppView.DASHBOARD)}
                 onLockToggle={handleLockToggle}
+              />
+            )}
+          </div>
+        );
+        
+      case AppView.GENERATE_PDF:
+        return (
+          <div className="container mx-auto p-6">
+            <header className="text-center mb-8">
+              <h1 className="text-3xl font-bold font-playfair text-primary mb-2">
+                Génération du PDF
+              </h1>
+            </header>
+            
+            {selectedCharacter && (
+              <CharacterSheet 
+                character={selectedCharacter}
+                readOnly={true}
+                onBack={() => setView(AppView.DASHBOARD)}
+                generatePDF={true}
               />
             )}
           </div>

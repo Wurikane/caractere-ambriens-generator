@@ -2,16 +2,22 @@
 import React from 'react';
 import { Card } from './ui/card';
 import { Character } from '@/types/character';
-import { Eye, Lock, Edit } from 'lucide-react';
+import { Eye, Lock, Edit, FileText } from 'lucide-react';
 import { Button } from './ui/button';
 
 interface CharacterCardProps {
   character: Character;
   onView: (id: string) => void;
   onEdit: (id: string) => void;
+  onGeneratePDF: (id: string) => void;
 }
 
-const CharacterCard: React.FC<CharacterCardProps> = ({ character, onView, onEdit }) => {
+const CharacterCard: React.FC<CharacterCardProps> = ({ 
+  character, 
+  onView, 
+  onEdit,
+  onGeneratePDF
+}) => {
   return (
     <div className="victorian-card hover:shadow-lg transition-shadow duration-300">
       <div className="flex justify-between items-start mb-4">
@@ -35,7 +41,7 @@ const CharacterCard: React.FC<CharacterCardProps> = ({ character, onView, onEdit
         </p>
       </div>
       
-      <div className="flex space-x-2 mt-4">
+      <div className="flex flex-wrap gap-2 mt-4">
         <Button 
           variant="outline" 
           size="sm" 
@@ -55,6 +61,15 @@ const CharacterCard: React.FC<CharacterCardProps> = ({ character, onView, onEdit
             <Edit className="h-4 w-4 mr-2" /> Éditer
           </Button>
         )}
+        
+        <Button 
+          variant="outline" 
+          size="sm" 
+          className="flex-1 victorian-button bg-opacity-20 hover:bg-opacity-30"
+          onClick={() => onGeneratePDF(character.id)}
+        >
+          <FileText className="h-4 w-4 mr-2" /> PDF
+        </Button>
       </div>
     </div>
   );
