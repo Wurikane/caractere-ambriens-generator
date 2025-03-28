@@ -6,6 +6,7 @@ import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { Eye, EyeOff, Lock, User } from 'lucide-react';
+import { InputOTP, InputOTPGroup, InputOTPSlot } from './ui/input-otp';
 
 type AuthFormProps = {
   onSuccess: () => void;
@@ -21,8 +22,9 @@ const AuthForm: React.FC<AuthFormProps> = ({ onSuccess }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [showOtp, setShowOtp] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
+  const { register, handleSubmit, formState: { errors }, setValue, watch } = useForm<FormValues>();
   const { toast } = useToast();
+  const [otpValue, setOtpValue] = useState('');
 
   const onSubmit = (data: FormValues) => {
     if (isLogin && !showOtp) {
@@ -37,6 +39,16 @@ const AuthForm: React.FC<AuthFormProps> = ({ onSuccess }) => {
       return;
     }
 
+    // Si OTP est actif, vérifier qu'il a 6 chiffres
+    if (showOtp && (otpValue.length !== 6 || !/^\d+$/.test(otpValue))) {
+      toast({
+        title: "Code invalide",
+        description: "Le code doit contenir 6 chiffres",
+        variant: "destructive"
+      });
+      return;
+    }
+
     // Simuler la connexion/inscription réussie
     setTimeout(() => {
       toast({
@@ -45,6 +57,11 @@ const AuthForm: React.FC<AuthFormProps> = ({ onSuccess }) => {
       });
       onSuccess();
     }, 1500);
+  };
+
+  const handleOtpChange = (value: string) => {
+    setOtpValue(value);
+    setValue('otp', value);
   };
 
   return (
@@ -105,16 +122,21 @@ const AuthForm: React.FC<AuthFormProps> = ({ onSuccess }) => {
         {showOtp && (
           <div className="space-y-2 animate-fade-in">
             <Label htmlFor="otp" className="text-foreground/90">Code de vérification</Label>
-            <Input
-              id="otp"
-              type="text"
-              className="victorian-input"
-              placeholder="123456"
-              {...register("otp", { 
-                required: "Le code est requis",
-                pattern: { value: /^\d{6}$/, message: "Le code doit contenir 6 chiffres" }
-              })}
-            />
+            <InputOTP 
+              maxLength={6} 
+              value={otpValue}
+              onChange={handleOtpChange}
+              className="gap-2 justify-center"
+            >
+              <InputOTPGroup>
+                <InputOTPSlot index={0} className="victorian-input w-12 h-12" />
+                <InputOTPSlot index={1} className="victorian-input w-12 h-12" />
+                <InputOTPSlot index={2} className="victorian-input w-12 h-12" />
+                <InputOTPSlot index={3} className="victorian-input w-12 h-12" />
+                <InputOTPSlot index={4} className="victorian-input w-12 h-12" />
+                <InputOTPSlot index={5} className="victorian-input w-12 h-12" />
+              </InputOTPGroup>
+            </InputOTP>
             {errors.otp && (
               <p className="text-destructive text-sm">{errors.otp.message}</p>
             )}
@@ -138,6 +160,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ onSuccess }) => {
           onClick={() => {
             setIsLogin(!isLogin);
             setShowOtp(false);
+            setOtpValue('');
           }}
         >
           {isLogin 
