@@ -1,26 +1,104 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>victorian-ambriens-generator</title>
-    <meta name="description" content="Lovable Generated Project" />
-    <meta name="author" content="Lovable" />
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Créateur de Personnage Ambriens</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fondamento&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cardo&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Cardo', serif;
+      background: url('https://www.transparenttextures.com/patterns/old-map.png');
+      color: #2e1f0f;
+      padding: 2rem;
+      margin: 0;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background-color: #fcf9f3;
+      border: 3px double #8b6d45;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      padding: 2rem;
+    }
+    h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 2.4rem;
+      text-align: center;
+      color: #2b3b4d;
+    }
+    label {
+      font-weight: bold;
+      font-family: 'Cinzel', serif;
+      font-size: 0.95rem;
+      color: #3b2916;
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+    input[type="text"], input[type="number"] {
+      font-family: 'Cardo', serif;
+      border: 1px solid #a88e5d;
+      background-color: #fefdf8;
+      padding: 0.4rem;
+      border-radius: 4px;
+      width: 100%;
+      max-width: 220px;
+    }
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .form-section {
+      background-color: #f4efe9;
+      border: 1px solid #c6ad8f;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 2rem;
+    }
+    .form-section h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.4rem;
+      margin-top: 0;
+      color: #3b2916;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Créateur de Personnage Ambriens</h1>
 
-    <meta property="og:title" content="Lovable Generated Project" />
-    <meta property="og:description" content="Lovable Generated Project" />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <div class="form-section">
+      <h2>Identité</h2>
+      <div class="form-row">
+        <div><label for="nom">Nom</label><input type="text" id="nom"></div>
+        <div><label for="age">Âge</label><input type="number" id="age" min="10" max="100"></div>
+        <div><label for="origine">Origine</label><input type="text" id="origine"></div>
+      </div>
+    </div>
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@lovable_dev" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-  </head>
+    <div class="form-section">
+      <h2>Caractéristiques</h2>
+      <div class="form-row">
+        <div><label for="force">Force</label><input type="number" id="force" min="20" max="999"></div>
+        <div><label for="dexterite">Dextérité</label><input type="number" id="dexterite" min="20" max="999"></div>
+        <div><label for="intelligence">Intelligence</label><input type="number" id="intelligence" min="20" max="999"></div>
+      </div>
+    </div>
 
-  <body>
-    <div id="root"></div>
-    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
-    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+    <div class="form-section">
+      <h2>Autres informations</h2>
+      <div class="form-row">
+        <div><label for="symbole">Symbole personnel</label><input type="text" id="symbole"></div>
+        <div><label for="karma">Karma (-15 à +15)</label><input type="number" id="karma" min="-15" max="15"></div>
+        <div><label for="couleur">Couleur des yeux</label><input type="text" id="yeux"></div>
+      </div>
+    </div>
+
+    <p style="text-align:center; font-size: 0.9rem; font-style: italic; color: #665544;">Version simplifiée. Export PDF à venir.</p>
+  </div>
+</body>
 </html>
